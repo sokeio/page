@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Livewire;
+namespace Sokeio\Page;
 
 use Sokeio\Builder\FormBuilder;
 use Sokeio\Page\Models\Page;
