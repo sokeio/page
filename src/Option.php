@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace Sokeio\Content;
 
 use Sokeio\PlatformOperation;
 
