@@ -40,7 +40,7 @@ class PageForm extends Form
         return UI::Container([
             UI::Prex(
                 'data',
-                [
+                [   UI::Hidden('author_id')->ValueDefault(auth()->user()->id),
                     UI::Row([
                         UI::Column8([
                             UI::Text('name')->Label(__('Title'))->required(),
