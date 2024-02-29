@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Sokeio\Page\Livewire\PageForm;
 use Sokeio\Page\Livewire\PageTable;
-use Sokeio\Page\Livewire\PageBuilder;
+use Sokeio\Page\PageBuilder;
 
 Route::group(['as' => 'admin.'], function () {
     route_crud('page', PageTable::class, PageForm::class);
