@@ -3,8 +3,10 @@
 namespace Sokeio\Page;
 
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 use Sokeio\Laravel\ServicePackage;
 use Sokeio\Concerns\WithServiceProvider;
+use Sokeio\Facades\Platform;
 
 class PageServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,11 @@ class PageServiceProvider extends ServiceProvider
     public function packageRegistered()
     {
         $this->extending();
+        Platform::Ready(function () {
+            if (module_active('builder')) {
+                Livewire::component('page::page-builder', PageBuilder::class);
+            }
+        });
     }
     private function bootGate()
     {

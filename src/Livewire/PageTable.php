@@ -24,6 +24,11 @@ class PageTable extends Table
     {
         return apply_filters('CMS_PAGE_BUTTONS', [
             UI::ButtonCreate(__('Create'))->ModalRoute($this->getRoute() . '.add')->ModalTitle(__('Create Data'))->ModalFullscreen(),
+            UI::Button(__('Create With Builder'))->Link(function () {
+                return route('admin.page.create-builder');
+            })->When(function () {
+                return module_active('builder');
+            }),
         ]);
     }
     protected function getTableActions()
@@ -34,6 +39,11 @@ class PageTable extends Table
                     'dataId' => $row->id
                 ];
             })->ModalTitle(__('Edit Data'))->ModalFullscreen(),
+            UI::Button(__('Edit With Builder'))->Link(function ($item) {
+                return route('admin.page.edit-builder', ['dataId' => $item->getDataItem()->id]);
+            })->When(function () {
+                return module_active('builder');
+            }),
             UI::ButtonRemove(__('Remove'))->Confirm(__('Do you want to delete this record?'), 'Confirm')->WireClick(function ($item) {
                 return 'doRemove(' . $item->getDataItem()->id . ')';
             })
