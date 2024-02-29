@@ -1,0 +1,63 @@
+<?php
+
+namespace Sokeio\Page\Livewire;
+
+use Sokeio\Page\Models\Page;
+use Sokeio\Components\Table;
+use Sokeio\Components\UI;
+
+class PageTable extends Table
+{
+    protected function getModel()
+    {
+        return Page::class;
+    }
+    public function getTitle()
+    {
+        return __('Page');
+    }
+    protected function getRoute()
+    {
+        return 'admin.page';
+    }
+    protected function getButtons()
+    {
+        return apply_filters('CMS_PAGE_BUTTONS', [
+            UI::ButtonCreate(__('Create'))->ModalRoute($this->getRoute() . '.add')->ModalTitle(__('Create Data'))->ModalFullscreen(),
+        ]);
+    }
+    protected function getTableActions()
+    {
+        return  apply_filters('CMS_PAGE_TABLE_ACTIONS', [
+            UI::ButtonEdit(__('Edit'))->ModalRoute($this->getRoute() . '.edit', function ($row) {
+                return [
+                    'dataId' => $row->id
+                ];
+            })->ModalTitle(__('Edit Data'))->ModalFullscreen(),
+            UI::ButtonRemove(__('Remove'))->Confirm(__('Do you want to delete this record?'), 'Confirm')->WireClick(function ($item) {
+                return 'doRemove(' . $item->getDataItem()->id . ')';
+            })
+        ]);
+    }
+    public function getColumns()
+    {
+        return [
+            UI::Text('name')->Label(__('Title'))->FieldValue(function ($item) {
+                return  "<a href='" . route('page.slug', $item->slug) . "' title='{$item->name}' target='_blank'>{$item->name}</a>";
+            }),
+            UI::Text('layout')->Label(__('Layout'))->NoSort(),
+            UI::Text('status')->Label(__('Status'))->NoSort(),
+            UI::Text('created_at')->Label(__('Created At')),
+            UI::Text('updated_at')->Label(__('Updated At')),
+            // UI::ButtonList(UI::ForEach($this->langs, [
+            //     UI::Button(function ($item) {
+            //         return sokeio_flags($item->getEachData()->flag, '1x1');
+            //     })->ModalRoute($this->getRoute() . '.edit', function ($row, $item) {
+            //         return  ['dataId' => $row->id, 'lang' => $item->getEachData()->code];
+            //     })->ModalTitle(__('Edit Data'))->ModalFullscreen()->When(function ($item) {
+            //         return $item->getEachData()->flag != '';
+            //     })->Small()->ButtonColor('-icon')
+            // ]))->Label(__('Languages'))->NoSort()
+        ];
+    }
+}
