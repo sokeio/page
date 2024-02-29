@@ -7,7 +7,7 @@ use Sokeio\Page\PageBuilder;
 
 Route::group(['as' => 'admin.'], function () {
     route_crud('page', PageTable::class, PageForm::class);
-    if (module_active('builder')) {
+    if (page_with_builder()) {
         Route::get('page/create-builder', PageBuilder::class)->name('page.create-builder');
         Route::get('page/{dataId}/edit-builder', PageBuilder::class)->name('page.edit-builder');
     }
