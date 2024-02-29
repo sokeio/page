@@ -43,7 +43,7 @@ class PageTable extends Table
                 ];
             })->ModalTitle(__('Edit Data'))->ModalFullscreen(),
             UI::Button(__('Edit With Builder'))->Link(function ($item) {
-                if (page_with_builder()) {
+                if (!page_with_builder()) {
                     return '#';
                 }
                 return route('admin.page.edit-builder', ['dataId' => $item->getDataItem()->id]);

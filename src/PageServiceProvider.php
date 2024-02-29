@@ -58,7 +58,7 @@ class PageServiceProvider extends ServiceProvider
         Platform::Ready(function () {
 
             MenuRender::RegisterType(MenuItemPage::class);
-            if (module_active('builder')) {
+            if (page_with_builder()) {
                 Livewire::component('page::page-builder', PageBuilder::class);
             }
             if (sokeio_is_admin()) {
