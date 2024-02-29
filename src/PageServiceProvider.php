@@ -59,7 +59,6 @@ class PageServiceProvider extends ServiceProvider
 
             MenuRender::RegisterType(MenuItemPage::class);
             if (page_with_builder()) {
-                include_once __DIR__ . '/../PageBuilder.php';
                 Livewire::component('page::page-builder', PageBuilder::class);
             }
             if (sokeio_is_admin()) {
