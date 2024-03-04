@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('author_id');
             $table->string('status', 60)->default('published');
             $table->string('image', 255)->nullable();
-            $table->integer('views')->unsigned()->default(0);
+            $table->string('view_layout')->unsigned()->default(0);
             $table->datetime('published_at')->nullable();
             $table->string('lock_password')->nullable();
             $table->string('layout', 255)->nullable();

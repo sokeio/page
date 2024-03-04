@@ -5,6 +5,7 @@ namespace Sokeio\Page\Livewire;
 use Sokeio\Components\Form;
 use Sokeio\Components\UI;
 use Sokeio\Breadcrumb;
+use Sokeio\Facades\Theme;
 use Sokeio\Page\Models\Page;
 
 class PageForm extends Form
@@ -40,7 +41,8 @@ class PageForm extends Form
         return UI::Container([
             UI::Prex(
                 'data',
-                [   UI::Hidden('author_id')->ValueDefault(auth()->user()->id),
+                [
+                    UI::Hidden('author_id')->ValueDefault(auth()->user()->id),
                     UI::Row([
                         UI::Column8([
                             UI::Text('name')->Label(__('Title'))->required(),
@@ -72,12 +74,33 @@ class PageForm extends Form
                                         'id' => 'default',
                                         'name' => __('Default')
                                     ],
+                                    ...collect(Theme::getLayouts())->duplicates()->where(function ($item) {
+                                        return $item != 'default';
+                                    })->map(function ($layout) {
+                                        return [
+                                            'id' => $layout,
+                                            'name' => $layout
+                                        ];
+                                    })
+                                ];
+                            }),
+                            UI::Select('view_layout')->Label(__('View Layout'))->DataSource(function () {
+                                return [
                                     [
-                                        'id' => 'none',
-                                        'name' => __('None')
+                                        'id' => 'page::page',
+                                        'name' => __('Page Default')
+                                    ],
+                                    [
+                                        'id' => 'page::page-title',
+                                        'name' => __('Page With Title')
+                                    ],
+                                    [
+                                        'id' => 'page::page-no-title',
+                                        'name' => __('Page Without Title')
                                     ],
                                 ];
                             }),
+                            UI::Checkbox('is_container')->Label(__('With Container')),
                             UI::Button(__('Save article'))->WireClick('doSave()')->ClassName('w-100 mb-2'),
                         ]),
                     ]),

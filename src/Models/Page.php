@@ -3,14 +3,17 @@
 namespace Sokeio\Page\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Sokeio\Comment\Concerns\Actionable;
 use Sokeio\Comment\Concerns\Commentable;
+use Sokeio\Comment\Concerns\Rateable;
+use Sokeio\Comment\Concerns\Viewable;
 use Sokeio\Concerns\WithSlug;
 use Sokeio\Seo\HasSEO;
 
 class Page extends Model
 {
-    use WithSlug, HasSEO, Commentable;
-    
+    use WithSlug, HasSEO, Commentable, Actionable, Rateable, Viewable;
+
     public function getSeoCanonicalUrl()
     {
         return route('page.slug', ['page' => $this->slug]);
@@ -26,7 +29,8 @@ class Page extends Model
         'description',
         'content',
         'image',
-        'views',
+        'view_layout',
+        'is_container',
         'status',
         'author_id',
         'published_at',

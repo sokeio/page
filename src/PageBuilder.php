@@ -5,6 +5,7 @@ namespace Sokeio\Page;
 use Sokeio\Builder\FormBuilder;
 use Sokeio\Page\Models\Page;
 use Sokeio\Components\UI;
+use Sokeio\Facades\Theme;
 
 class PageBuilder extends FormBuilder
 {
@@ -36,6 +37,7 @@ class PageBuilder extends FormBuilder
                 UI::Div(UI::Error('content')),
                 UI::Text('name')->Label(__('Title'))->required(),
                 UI::Text('slug')->Label(__('Slug')),
+                UI::Textarea('description')->Label(__('Description')),
 
                 UI::Select('status')->Label(__('Status'))->DataSource(function () {
                     return [
@@ -58,13 +60,33 @@ class PageBuilder extends FormBuilder
                             'id' => 'default',
                             'name' => __('Default')
                         ],
+                        ...collect(Theme::getLayouts())->duplicates()->where(function ($item) {
+                            return $item != 'default';
+                        })->map(function ($layout) {
+                            return [
+                                'id' => $layout,
+                                'name' => $layout
+                            ];
+                        })
+                    ];
+                }),
+                UI::Select('view_layout')->Label(__('View Layout'))->DataSource(function () {
+                    return [
                         [
-                            'id' => 'none',
-                            'name' => __('None')
+                            'id' => 'page::page',
+                            'name' => __('Page Default')
+                        ],
+                        [
+                            'id' => 'page::page-title',
+                            'name' => __('Page With Title')
+                        ],
+                        [
+                            'id' => 'page::page-no-title',
+                            'name' => __('Page Without Title')
                         ],
                     ];
                 }),
-                UI::Textarea('description')->Label(__('Description')),
+                UI::Checkbox('is_container')->Label(__('With Container')),
                 UI::Textarea('custom_js')->Label(__('Custom Js')),
                 UI::Textarea('custom_css')->Label(__('Custom CSS')),
                 UI::Button(__('Save article'))->WireClick('doSave()')->ClassName('w-100 mb-2'),
