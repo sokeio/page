@@ -13,6 +13,7 @@ use Sokeio\Facades\Platform;
 use Sokeio\Page\Livewire\MenuItemPage;
 use Sokeio\Page\Livewire\PageView;
 use Sokeio\Page\Models\Page;
+use Sokeio\Seo\Facades\Sitemap;
 
 class PageServiceProvider extends ServiceProvider
 {
@@ -58,6 +59,26 @@ class PageServiceProvider extends ServiceProvider
         Platform::Ready(function () {
 
             MenuRender::RegisterType(MenuItemPage::class);
+            add_action('SEO_SITEMAP_INDEX', function () {
+                foreach (['page'] as $type) {
+                    Sitemap::addSitemap(route('sitemap_type', ['sitemap' => $type]));
+                }
+            });
+            add_action('SEO_SITEMAP_PAGE', function ($sitemap) {
+                $count = Page::query()->count();
+                $maxPage = ceil($count / 1000) + 1;
+                if($count<1000){
+                    $maxPage = 1;
+                }
+                for ($page = 1; $page <= $maxPage; $page++) {
+                    Sitemap::addSitemap(route('sitemap_page', ['sitemap' => 'page', 'page' => $page]));
+                }
+            });
+            add_action('SEO_SITEMAP_PAGE_PAGE', function ($page) {
+                foreach (Page::query()->latest()->paginate(1000, ['id', 'slug', 'created_at'], 'page', $page) as $tool) {
+                    Sitemap::addItem($tool->getSeoCanonicalUrl(), $tool->created_at);
+                };
+            });
             if (page_with_builder()) {
                 Livewire::component('page::page-builder', PageBuilder::class);
             }
