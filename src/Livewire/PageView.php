@@ -32,6 +32,11 @@ class PageView extends Component
         Assets::setTitle($this->page->name);
 
         if ($this->page->id == setting('PLATFORM_HOMEPAGE')) {
+            SeoHelper()->SEODataTransformer(function ($data) {
+                $data['title'] = setting('PLATFORM_HOMEPAGE_TITLE');
+                $data['description'] = setting('PLATFORM_HOMEPAGE_DESCRIPTION');
+                return $data;
+            });
             Assets::setTitle(setting('PLATFORM_HOMEPAGE_TITLE'));
             Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
         } else {
