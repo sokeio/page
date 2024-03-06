@@ -13,9 +13,13 @@ use Sokeio\Seo\HasSEO;
 class Page extends Model
 {
     use WithSlug, HasSEO, Commentable, Actionable, Rateable, Viewable;
-
+    public function isHomePage()
+    {
+        return $this->id == setting('PLATFORM_HOMEPAGE');
+    }
     public function getSeoCanonicalUrl()
     {
+        if ($this->isHomePage()) return url('/');
         return route('page.slug', ['page' => $this->slug]);
     }
     /**

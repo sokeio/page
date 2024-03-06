@@ -59,7 +59,7 @@ class PageTable extends Table
     {
         return [
             UI::Text('name')->Label(__('Title'))->FieldValue(function ($item) {
-                return  "<a href='" . route('page.slug', $item->slug) . "' title='{$item->name}' target='_blank'>{$item->name}</a>";
+                return  "<a href='" . $item->getSeoCanonicalUrl() . "' title='{$item->name}' target='_blank'>{$item->name}</a>";
             }),
             UI::Text('layout')->Label(__('Layout'))->NoSort(),
             UI::Text('status')->Label(__('Status'))->NoSort(),
