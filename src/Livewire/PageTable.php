@@ -23,34 +23,34 @@ class PageTable extends Table
     protected function getButtons()
     {
         return apply_filters('CMS_PAGE_BUTTONS', [
-            UI::ButtonCreate(__('Create'))->ModalRoute($this->getRoute() . '.add')->ModalTitle(__('Create Data'))->ModalFullscreen(),
-            UI::Button(__('Create With Builder'))->Link(function () {
-                if (!page_with_builder()) {
+            UI::buttonCreate(__('Create'))->modalRoute($this->getRoute() . '.add')->modalTitle(__('Create Data'))->modalFullscreen(),
+            UI::button(__('Create With Builder'))->Link(function () {
+                if (!pageWithBuilder()) {
                     return '#';
                 }
                 return route('admin.page.create-builder');
             })->When(function () {
-                return page_with_builder();
+                return pageWithBuilder();
             }),
         ]);
     }
     protected function getTableActions()
     {
         return  apply_filters('CMS_PAGE_TABLE_ACTIONS', [
-            UI::ButtonEdit(__('Edit'))->ModalRoute($this->getRoute() . '.edit', function ($row) {
+            UI::buttonEdit(__('Edit'))->modalRoute($this->getRoute() . '.edit', function ($row) {
                 return [
                     'dataId' => $row->id
                 ];
-            })->ModalTitle(__('Edit Data'))->ModalFullscreen(),
-            UI::Button(__('Edit With Builder'))->Link(function ($item) {
-                if (!page_with_builder()) {
+            })->modalTitle(__('Edit Data'))->modalFullscreen(),
+            UI::button(__('Edit With Builder'))->Link(function ($item) {
+                if (!pageWithBuilder()) {
                     return '#';
                 }
                 return route('admin.page.edit-builder', ['dataId' => $item->getDataItem()->id]);
             })->When(function () {
-                return page_with_builder();
+                return pageWithBuilder();
             }),
-            UI::ButtonRemove(__('Remove'))->Confirm(__('Do you want to delete this record?'), 'Confirm')->WireClick(function ($item) {
+            UI::buttonRemove(__('Remove'))->confirm(__('Do you want to delete this record?'), 'Confirm')->wireClick(function ($item) {
                 return 'doRemove(' . $item->getDataItem()->id . ')';
             })
         ]);
@@ -58,22 +58,22 @@ class PageTable extends Table
     public function getColumns()
     {
         return [
-            UI::Text('name')->Label(__('Title'))->FieldValue(function ($item) {
+            UI::text('name')->label(__('Title'))->fieldValue(function ($item) {
                 return  "<a href='" . $item->getSeoCanonicalUrl() . "' title='{$item->name}' target='_blank'>{$item->name}</a>";
             }),
-            UI::Text('layout')->Label(__('Layout'))->NoSort(),
-            UI::Text('status')->Label(__('Status'))->NoSort(),
-            UI::Text('created_at')->Label(__('Created At')),
-            UI::Text('updated_at')->Label(__('Updated At')),
-            // UI::ButtonList(UI::ForEach($this->langs, [
-            //     UI::Button(function ($item) {
-            //         return sokeio_flags($item->getEachData()->flag, '1x1');
-            //     })->ModalRoute($this->getRoute() . '.edit', function ($row, $item) {
+            UI::text('layout')->label(__('Layout'))->NoSort(),
+            UI::text('status')->label(__('Status'))->NoSort(),
+            UI::text('created_at')->label(__('Created At')),
+            UI::text('updated_at')->label(__('Updated At')),
+            // UI::buttonList(UI::forEach($this->langs, [
+            //     UI::button(function ($item) {
+            //         return sokeioFlags($item->getEachData()->flag, '1x1');
+            //     })->modalRoute($this->getRoute() . '.edit', function ($row, $item) {
             //         return  ['dataId' => $row->id, 'lang' => $item->getEachData()->code];
-            //     })->ModalTitle(__('Edit Data'))->ModalFullscreen()->When(function ($item) {
+            //     })->modalTitle(__('Edit Data'))->modalFullscreen()->When(function ($item) {
             //         return $item->getEachData()->flag != '';
-            //     })->Small()->ButtonColor('-icon')
-            // ]))->Label(__('Languages'))->NoSort()
+            //     })->Small()->buttonColor('-icon')
+            // ]))->label(__('Languages'))->NoSort()
         ];
     }
 }

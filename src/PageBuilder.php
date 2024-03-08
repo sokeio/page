@@ -13,7 +13,7 @@ class PageBuilder extends FormBuilder
     {
         return __('Page');
     }
-    protected function FooterUI()
+    protected function footerUI()
     {
         return [];
     }
@@ -26,20 +26,20 @@ class PageBuilder extends FormBuilder
     {
         return $this->data->slug ? route('page.slug', ['page' => $this->data->slug]) : '';
     }
-    protected function FormUI()
+    protected function formUI()
     {
-        return UI::Prex('data', UI::Row([
-            UI::Column12([
-                UI::Hidden('content')->ValueDefault('')->required()->Label(__('Content')),
-                UI::Hidden('author_id')->ValueDefault(function () {
+        return UI::prex('data', UI::row([
+            UI::column12([
+                UI::hidden('content')->valueDefault('')->required()->label(__('Content')),
+                UI::hidden('author_id')->valueDefault(function () {
                     return auth()->user()->id;
                 }),
-                UI::Div(UI::Error('content')),
-                UI::Text('name')->Label(__('Title'))->required(),
-                UI::Text('slug')->Label(__('Slug')),
-                UI::Textarea('description')->Label(__('Description')),
+                UI::Div(UI::error('content')),
+                UI::text('name')->label(__('Title'))->required(),
+                UI::text('slug')->label(__('Slug')),
+                UI::textarea('description')->label(__('Description')),
 
-                UI::Select('status')->Label(__('Status'))->DataSource(function () {
+                UI::select('status')->label(__('Status'))->dataSource(function () {
                     return [
                         [
                             'id' => 'draft',
@@ -50,11 +50,11 @@ class PageBuilder extends FormBuilder
                             'name' => __('Published')
                         ]
                     ];
-                })->ValueDefault('published'),
-                // UI::DatePicker('published_at')->Label(__('Published At')),
-                UI::Image('image')->Label(__('Image')),
+                })->valueDefault('published'),
+                // UI::datePicker('published_at')->label(__('Published At')),
+                UI::image('image')->label(__('Image')),
 
-                UI::Select('layout')->Label(__('Layout'))->DataSource(function () {
+                UI::select('layout')->label(__('Layout'))->dataSource(function () {
                     return [
                         [
                             'id' => 'default',
@@ -70,7 +70,7 @@ class PageBuilder extends FormBuilder
                         })
                     ];
                 }),
-                UI::Select('view_layout')->Label(__('View Layout'))->DataSource(function () {
+                UI::select('view_layout')->label(__('View Layout'))->dataSource(function () {
                     return [
                         [
                             'id' => 'page::page',
@@ -86,10 +86,10 @@ class PageBuilder extends FormBuilder
                         ],
                     ];
                 }),
-                UI::Checkbox('is_container')->Label(__('With Container')),
-                UI::Textarea('custom_js')->Label(__('Custom Js')),
-                UI::Textarea('custom_css')->Label(__('Custom CSS')),
-                UI::Button(__('Save article'))->WireClick('doSave()')->ClassName('w-100 mb-2'),
+                UI::checkBox('is_container')->label(__('With Container')),
+                UI::textarea('custom_js')->label(__('Custom Js')),
+                UI::textarea('custom_css')->label(__('Custom CSS')),
+                UI::button(__('Save article'))->wireClick('doSave()')->className('w-100 mb-2'),
             ])
         ]));
     }

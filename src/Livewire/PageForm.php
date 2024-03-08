@@ -32,28 +32,28 @@ class PageForm extends Form
     {
         return Page::class;
     }
-    protected function FooterUI()
+    protected function footerUI()
     {
         return null;
     }
-    public function FormUI()
+    public function formUI()
     {
-        return UI::Container([
-            UI::Prex(
+        return UI::container([
+            UI::prex(
                 'data',
                 [
-                    UI::Hidden('author_id')->ValueDefault(auth()->user()->id),
-                    UI::Row([
-                        UI::Column8([
-                            UI::Text('name')->Label(__('Title'))->required(),
-                            UI::Text('slug')->Label(__('Slug')),
-                            UI::Tinymce('content')->Label(__('Content'))->required(),
-                            UI::Textarea('description')->Label(__('Description')),
-                            UI::Textarea('custom_js')->Label(__('Custom Js')),
-                            UI::Textarea('custom_css')->Label(__('Custom CSS')),
+                    UI::hidden('author_id')->valueDefault(auth()->user()->id),
+                    UI::row([
+                        UI::column8([
+                            UI::text('name')->label(__('Title'))->required(),
+                            UI::text('slug')->label(__('Slug')),
+                            UI::tinymce('content')->label(__('Content'))->required(),
+                            UI::textarea('description')->label(__('Description')),
+                            UI::textarea('custom_js')->label(__('Custom Js')),
+                            UI::textarea('custom_css')->label(__('Custom CSS')),
                         ]),
-                        UI::Column4([
-                            UI::Select('status')->Label(__('Status'))->DataSource(function () {
+                        UI::column4([
+                            UI::select('status')->label(__('Status'))->dataSource(function () {
                                 return [
                                     [
                                         'id' => 'draft',
@@ -64,11 +64,11 @@ class PageForm extends Form
                                         'name' => __('Published')
                                     ]
                                 ];
-                            })->ValueDefault('published'),
-                            // UI::DatePicker('published_at')->Label(__('Published At')),
-                            UI::Image('image')->Label(__('Image')),
+                            })->valueDefault('published'),
+                            // UI::datePicker('published_at')->label(__('Published At')),
+                            UI::image('image')->label(__('Image')),
 
-                            UI::Select('layout')->Label(__('Layout'))->DataSource(function () {
+                            UI::select('layout')->label(__('Layout'))->dataSource(function () {
                                 return [
                                     [
                                         'id' => 'default',
@@ -84,7 +84,7 @@ class PageForm extends Form
                                     })
                                 ];
                             }),
-                            UI::Select('view_layout')->Label(__('View Layout'))->DataSource(function () {
+                            UI::select('view_layout')->label(__('View Layout'))->dataSource(function () {
                                 return [
                                     [
                                         'id' => 'page::page',
@@ -100,13 +100,13 @@ class PageForm extends Form
                                     ],
                                 ];
                             }),
-                            UI::Checkbox('is_container')->Label(__('With Container')),
-                            UI::Button(__('Save article'))->WireClick('doSave()')->ClassName('w-100 mb-2'),
+                            UI::checkBox('is_container')->label(__('With Container')),
+                            UI::button(__('Save article'))->wireClick('doSave()')->className('w-100 mb-2'),
                         ]),
                     ]),
                 ]
             )
         ])
-            ->ClassName('p-3');
+            ->className('p-3');
     }
 }
