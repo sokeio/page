@@ -14,6 +14,6 @@
 use Sokeio\Facades\Platform;
 use Sokeio\Page\Livewire\PageView;
 
-Platform::RouteSiteBeforeReady(function () {
-    permalink_route('cms_page_permalink', '{page}', PageView::class, 'page.slug');
+Platform::routeSiteBeforeReady(function () {
+    permalinkRoute('cms_page_permalink', '{page}', PageView::class, 'page.slug');
 });

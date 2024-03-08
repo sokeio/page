@@ -40,7 +40,7 @@ class PageView extends Component
             Assets::setTitle(setting('PLATFORM_HOMEPAGE_TITLE'));
             Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
         } else {
-            breadcrumb()->Add(__('Home'), url(''));
+            breadcrumb()->add(__('Home'), url(''));
             breadcrumb()->Title($this->page->name);
         }
     }

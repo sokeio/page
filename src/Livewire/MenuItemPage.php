@@ -9,7 +9,7 @@ use Sokeio\Menu\MenuItemBuilder;
 
 class MenuItemPage extends FormMenu
 {
-    public static function RenderItem(MenuItemBuilder $item)
+    public static function renderItem(MenuItemBuilder $item)
     {
         echo  view_scope('sokeio::menu.item.link', ['item' => $item, 'link' => Page::find($item->getValueContentData())?->getSeoCanonicalUrl()])->render();
     }
@@ -29,7 +29,7 @@ class MenuItemPage extends FormMenu
     protected function MenuUI()
     {
         return [
-            UI::SelectWithSearch('data')->Label(__('Page'))->required()->SearchDataSource('SearchPages')->DataSource(function () {
+            UI::selectWithSearch('data')->label(__('Page'))->required()->searchFn('SearchPages')->dataSource(function () {
                 return $this->SearchPages('');
             }),
         ];

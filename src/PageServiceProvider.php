@@ -34,12 +34,8 @@ class PageServiceProvider extends ServiceProvider
             ->hasTranslations()
             ->runsMigrations();
     }
-    public function extending()
+    private function addTrigger()
     {
-    }
-    public function packageRegistered()
-    {
-        $this->extending();
         add_filter(PLATFORM_HOMEPAGE, function ($prev) {
             if ($pageId = setting('PLATFORM_HOMEPAGE')) {
                 return ['uses' => PageView::class, 'params' => [
@@ -55,39 +51,40 @@ class PageServiceProvider extends ServiceProvider
             });
             return $prev;
         });
-
-        Platform::Ready(function () {
-
-            MenuRender::RegisterType(MenuItemPage::class);
-            add_action('SEO_SITEMAP_INDEX', function () {
-                foreach (['page'] as $type) {
-                    Sitemap::addSitemap(route('sitemap_type', ['sitemap' => $type]));
-                }
-            });
-            add_action('SEO_SITEMAP_PAGE', function ($sitemap) {
-                $count = Page::query()->count();
-                $maxPage = ceil($count / 1000) + 1;
-                if($count<1000){
-                    $maxPage = 1;
-                }
-                for ($page = 1; $page <= $maxPage; $page++) {
-                    Sitemap::addSitemap(route('sitemap_page', ['sitemap' => 'page', 'page' => $page]));
-                }
-            });
-            add_action('SEO_SITEMAP_PAGE_PAGE', function ($page) {
-                foreach (Page::query()->latest()->paginate(1000, ['id', 'slug', 'created_at'], 'page', $page) as $tool) {
-                    Sitemap::addItem($tool->getSeoCanonicalUrl(), $tool->created_at);
-                };
-            });
-            if (page_with_builder()) {
-                Livewire::component('page::page-builder', PageBuilder::class);
+        add_action('SEO_SITEMAP_INDEX', function () {
+            foreach (['page'] as $type) {
+                Sitemap::addSitemap(route('sitemap_type', ['sitemap' => $type]));
             }
-            if (sokeio_is_admin()) {
+        });
+        add_action('SEO_SITEMAP_PAGE', function () {
+            $count = Page::query()->count();
+            $maxPage = ceil($count / 1000) + 1;
+            if ($count < 1000) {
+                $maxPage = 1;
+            }
+            for ($page = 1; $page <= $maxPage; $page++) {
+                Sitemap::addSitemap(route('sitemap_page', ['sitemap' => 'page', 'page' => $page]));
+            }
+        });
+        add_action('SEO_SITEMAP_PAGE_PAGE', function ($page) {
+            $datas = Page::query()->latest()->paginate(1000, ['id', 'slug', 'created_at'], 'page', $page);
+            foreach ($datas as $tool) {
+                Sitemap::addItem($tool->getSeoCanonicalUrl(), $tool->created_at);
+            }
+        });
+    }
+    public function packageRegistered()
+    {
+        $this->addTrigger();
+        Platform::ready(function () {
+            MenuRender::RegisterType(MenuItemPage::class);
+
+            if (sokeioIsAdmin()) {
                 add_filter('SOKEIO_ADMIN_SETTING_OVERVIEW', function ($prev) {
                     return [
                         ...$prev,
-                        UI::Column12([
-                            UI::Select('PLATFORM_HOMEPAGE')->Label(__('Homepage'))->DataSource(function () {
+                        UI::column12([
+                            UI::select('PLATFORM_HOMEPAGE')->label(__('Homepage'))->dataSource(function () {
                                 return [
                                     [
                                         'id' => '',
@@ -97,23 +94,36 @@ class PageServiceProvider extends ServiceProvider
                                 ];
                             })
                         ]),
-                        UI::Column12([
-                            UI::Text('PLATFORM_HOMEPAGE_TITLE')->Label(__('Homepage title'))
+                        UI::column12([
+                            UI::text('PLATFORM_HOMEPAGE_TITLE')->label(__('Homepage title'))
                         ]),
-                        UI::Column12([
-                            UI::Textarea('PLATFORM_HOMEPAGE_DESCRIPTION')->Label(__('Homepage Description'))
+                        UI::column12([
+                            UI::textarea('PLATFORM_HOMEPAGE_DESCRIPTION')->label(__('Homepage Description'))
                         ]),
                     ];
                 });
-            }
-            Menu::Register(function () {
-                if (!sokeio_is_admin()) return;
-                menu_admin()
-                    ->route(['name' => 'admin.page', 'params' => []], 'Pages', '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-pagekit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                if (pageWithBuilder()) {
+                    Livewire::component('page::page-builder', PageBuilder::class);
+                }
+
+                Menu::Register(function () {
+                    menuAdmin()
+                        ->route(
+                            ['name' => 'admin.page', 'params' => []],
+                            'Pages',
+                            '<svg xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-brand-pagekit"
+                        width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M12.077 20h-5.077v-16h11v14h-5.077"></path>
-         </svg>', [], 'admin.page');
-            });
+         </svg>',
+                            [],
+                            'admin.page'
+                        );
+                });
+            }
         });
     }
     private function bootGate()
