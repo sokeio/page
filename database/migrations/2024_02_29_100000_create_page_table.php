@@ -20,14 +20,13 @@ return new class extends Migration
             $table->integer('author_id');
             $table->string('status', 60)->default('published');
             $table->string('image', 255)->nullable();
-            $table->string('view_layout')->unsigned()->default(0);
+            $table->string('view_layout')->nullable();
             $table->datetime('published_at')->nullable();
             $table->string('lock_password')->nullable();
             $table->string('layout', 255)->nullable();
             $table->string('app_before', 500)->nullable();
             $table->string('app_after', 500)->nullable();
             $table->longText('data')->nullable();
-            $table->boolean('hide_header')->nullable();
             $table->text('js')->nullable();
             $table->text('css')->nullable();
             $table->text('custom_js')->nullable();
