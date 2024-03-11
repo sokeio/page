@@ -29,7 +29,7 @@ class PageTable extends Table
                     return '#';
                 }
                 return route('admin.page.create-builder');
-            })->When(function () {
+            })->when(function () {
                 return pageWithBuilder();
             }),
         ]);
@@ -47,7 +47,7 @@ class PageTable extends Table
                     return '#';
                 }
                 return route('admin.page.edit-builder', ['dataId' => $item->getDataItem()->id]);
-            })->When(function () {
+            })->when(function () {
                 return pageWithBuilder();
             }),
             UI::buttonRemove(__('Remove'))->confirm(__('Do you want to delete this record?'), 'Confirm')->wireClick(function ($item) {
@@ -70,7 +70,7 @@ class PageTable extends Table
             //         return sokeioFlags($item->getEachData()->flag, '1x1');
             //     })->modalRoute($this->getRoute() . '.edit', function ($row, $item) {
             //         return  ['dataId' => $row->id, 'lang' => $item->getEachData()->code];
-            //     })->modalTitle(__('Edit Data'))->modalFullscreen()->When(function ($item) {
+            //     })->modalTitle(__('Edit Data'))->modalFullscreen()->when(function ($item) {
             //         return $item->getEachData()->flag != '';
             //     })->Small()->buttonColor('-icon')
             // ]))->label(__('Languages'))->NoSort()
