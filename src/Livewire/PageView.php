@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\View;
 use Sokeio\Page\Models\Page;
 use Sokeio\Component;
 use Sokeio\Facades\Assets;
-use Sokeio\Facades\Theme;
 
 class PageView extends Component
 {
@@ -17,21 +16,8 @@ class PageView extends Component
             redirect(url('/'));
             return;
         }
-        if ($this->page->layout) {
-            Theme::setLayout($this->page->layout);
-        }
-        SeoHelper()->for($this->page);
-        if ($this->page->css)
-            Assets::AddStyle($this->page->css ?? '');
-        if ($this->page->custom_css)
-            Assets::AddStyle($this->page->custom_css ?? '');
-        if ($this->page->js)
-            Assets::AddScript($this->page->js ?? '');
-        if ($this->page->custom_js)
-            Assets::AddScript($this->page->custom_js ?? '');
-        Assets::setTitle($this->page->name);
-
         if ($this->page->id == setting('PLATFORM_HOMEPAGE')) {
+            $this->page->setAssetLayout();
             SeoHelper()->SEODataTransformer(function ($data) {
                 $data['title'] = setting('PLATFORM_HOMEPAGE_TITLE');
                 $data['description'] = setting('PLATFORM_HOMEPAGE_DESCRIPTION');
@@ -41,7 +27,7 @@ class PageView extends Component
             Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
         } else {
             breadcrumb()->add(__('Home'), url(''));
-            breadcrumb()->Title($this->page->name);
+            $this->page->setAssets();
         }
     }
     public function render()

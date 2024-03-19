@@ -7,19 +7,23 @@ use Sokeio\Comment\Concerns\Actionable;
 use Sokeio\Comment\Concerns\Commentable;
 use Sokeio\Comment\Concerns\Rateable;
 use Sokeio\Comment\Concerns\Viewable;
+use Sokeio\Concerns\WithModelAssets;
 use Sokeio\Concerns\WithSlug;
 use Sokeio\Seo\HasSEO;
 
 class Page extends Model
 {
     use WithSlug, HasSEO, Commentable, Actionable, Rateable, Viewable;
+    use WithModelAssets;
     public function isHomePage()
     {
         return $this->id == setting('PLATFORM_HOMEPAGE');
     }
     public function getSeoCanonicalUrl()
     {
-        if ($this->isHomePage()) return url('/');
+        if ($this->isHomePage()) {
+            return url('/');
+        }
         return route('page.slug', ['page' => $this->slug]);
     }
     /**
