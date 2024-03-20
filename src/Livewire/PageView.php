@@ -33,9 +33,9 @@ class PageView extends Component
     public function render()
     {
         if ($this->page->view_layout && View::exists($this->page->view_layout)) {
-            return view_scope($this->page->view_layout, ['page' => $this->page]);
+            return viewScope($this->page->view_layout, ['page' => $this->page]);
         }
 
-        return view_scope('page::page', ['page' => $this->page]);
+        return viewScope('page::page', ['page' => $this->page]);
     }
 }

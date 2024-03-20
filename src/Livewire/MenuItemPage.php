@@ -11,7 +11,7 @@ class MenuItemPage extends FormMenu
 {
     public static function renderItem(MenuItemBuilder $item)
     {
-        echo  view_scope('sokeio::menu.item.link', ['item' => $item, 'link' => Page::find($item->getValueContentData())?->getSeoCanonicalUrl()])->render();
+        echo  viewScope('sokeio::menu.item.link', ['item' => $item, 'link' => Page::find($item->getValueContentData())?->getSeoCanonicalUrl()])->render();
     }
     public static function getMenuName()
     {

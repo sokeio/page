@@ -22,7 +22,7 @@ class PageTable extends Table
     }
     protected function getButtons()
     {
-        return apply_filters('CMS_PAGE_BUTTONS', [
+        return applyFilters('CMS_PAGE_BUTTONS', [
             UI::buttonCreate(__('Create'))->modalRoute($this->getRoute() . '.add')->modalTitle(__('Create Data'))->modalFullscreen(),
             UI::button(__('Create With Builder'))->Link(function () {
                 if (!pageWithBuilder()) {
@@ -36,7 +36,7 @@ class PageTable extends Table
     }
     protected function getTableActions()
     {
-        return  apply_filters('CMS_PAGE_TABLE_ACTIONS', [
+        return  applyFilters('CMS_PAGE_TABLE_ACTIONS', [
             UI::buttonEdit(__('Edit'))->modalRoute($this->getRoute() . '.edit', function ($row) {
                 return [
                     'dataId' => $row->id

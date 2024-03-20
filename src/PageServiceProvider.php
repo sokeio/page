@@ -36,13 +36,13 @@ class PageServiceProvider extends ServiceProvider
     }
     private function addTrigger()
     {
-        add_filter(PLATFORM_HOMEPAGE, function ($prev) {
+        addFilter(PLATFORM_HOMEPAGE, function ($prev) {
             if ($pageId = setting('PLATFORM_HOMEPAGE')) {
                 return ['uses' => PageView::class, 'params' => [
                     'page' => Page::query()->where('id', $pageId)->first()
                 ]];
             }
-            add_filter('SEO_DATA_DEFAULT', function ($prev) {
+            addFilter('SEO_DATA_DEFAULT', function ($prev) {
                 return [
                     ...$prev,
                     'title' => setting('PLATFORM_HOMEPAGE_TITLE'),
@@ -51,12 +51,12 @@ class PageServiceProvider extends ServiceProvider
             });
             return $prev;
         });
-        add_action('SEO_SITEMAP_INDEX', function () {
+        addAction('SEO_SITEMAP_INDEX', function () {
             foreach (['page'] as $type) {
                 Sitemap::addSitemap(route('sitemap_type', ['sitemap' => $type]));
             }
         });
-        add_action('SEO_SITEMAP_PAGE', function () {
+        addAction('SEO_SITEMAP_PAGE', function () {
             $count = Page::query()->count();
             $maxPage = ceil($count / 1000) + 1;
             if ($count < 1000) {
@@ -66,7 +66,7 @@ class PageServiceProvider extends ServiceProvider
                 Sitemap::addSitemap(route('sitemap_page', ['sitemap' => 'page', 'page' => $page]));
             }
         });
-        add_action('SEO_SITEMAP_PAGE_PAGE', function ($page) {
+        addAction('SEO_SITEMAP_PAGE_PAGE', function ($page) {
             $datas = Page::query()->latest()->paginate(1000, ['id', 'slug', 'created_at'], 'page', $page);
             foreach ($datas as $tool) {
                 Sitemap::addItem($tool->getSeoCanonicalUrl(), $tool->created_at);
@@ -80,7 +80,7 @@ class PageServiceProvider extends ServiceProvider
             MenuRender::RegisterType(MenuItemPage::class);
 
             if (sokeioIsAdmin()) {
-                add_filter('SOKEIO_ADMIN_SETTING_OVERVIEW', function ($prev) {
+                addFilter('SOKEIO_ADMIN_SETTING_OVERVIEW', function ($prev) {
                     return [
                         ...$prev,
                         UI::column12([
@@ -129,7 +129,7 @@ class PageServiceProvider extends ServiceProvider
     private function bootGate()
     {
         if (!$this->app->runningInConsole()) {
-            add_filter(PLATFORM_PERMISSION_CUSTOME, function ($prev) {
+            addFilter(PLATFORM_PERMISSION_CUSTOME, function ($prev) {
                 return [
                     ...$prev
                 ];
