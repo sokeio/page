@@ -11,7 +11,10 @@ class MenuItemPage extends FormMenu
 {
     public static function renderItem(MenuItemBuilder $item)
     {
-        echo  viewScope('sokeio::menu.item.link', ['item' => $item, 'link' => Page::find($item->getValueContentData())?->getSeoCanonicalUrl()])->render();
+        echo viewScope('sokeio::menu.item.link', [
+            'item' => $item,
+            'link' => Page::find($item->getValueContentData())?->getSeoCanonicalUrl()
+        ])->render();
     }
     public static function getMenuName()
     {
@@ -21,17 +24,32 @@ class MenuItemPage extends FormMenu
     {
         return 'MenuItemPage';
     }
-    public function SearchPages($text)
-    {
-        $this->skipRender();
-        return Page::query()->where('name', 'like', '%' . $text . '%')->limit(20)->get(['id', 'name']);
-    }
     protected function MenuUI()
     {
         return [
-            UI::selectWithSearch('data')->label(__('Page'))->required()->searchFn('SearchPages')->dataSource(function () {
-                return $this->SearchPages('');
-            }),
+            UI::selectWithSearch('data')
+                ->label(__('Page'))->required()->querySearchFn(function ($component, $text, $currentId = null) {
+                    $component->skipRender();
+
+                    $rs = Page::query()
+                        ->when($text != "", function ($query) use ($text) {
+                            $query->where('name', 'like', '%' . $text . '%');
+                        })
+                        ->limit(20)->get(['id', 'name']);
+                    if ($currentId && $text == '') {
+                        $currentPage = Page::find($currentId);
+                        if ($currentPage) {
+                            return [
+                                [
+                                    'id' => $currentPage->id,
+                                    'name' => $currentPage->name
+                                ],
+                                ...$rs->toArray(),
+                            ];
+                        }
+                    }
+                    return $rs;
+                }),
         ];
     }
 }
