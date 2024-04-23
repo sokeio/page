@@ -65,7 +65,9 @@ class PageForm extends Form
                                     ]
                                 ];
                             })->valueDefault('published'),
-                            // UI::datePicker('published_at')->label(__('Published At')),
+                            UI::datePicker('published_at')->label(__('Published At'))->fieldOption([
+                                'enableTime' => true
+                            ]),
                             UI::image('image')->label(__('Image')),
 
                             UI::select('layout')->label(__('Layout'))->dataSource(function () {

@@ -57,6 +57,7 @@ class PageTable extends Table
         return [
             UI::text('name')->label(__('Title'))->setLink(),
             UI::text('layout')->label(__('Layout'))->NoSort(),
+            UI::datePicker('published_at')->label(__('Published At'))->NoSort(),
             UI::text('status')->label(__('Status'))->NoSort(),
             UI::text('created_at')->label(__('Created At')),
             UI::text('updated_at')->label(__('Updated At')),
