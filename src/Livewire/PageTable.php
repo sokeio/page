@@ -53,7 +53,8 @@ class PageTable extends Table
                 })->when(function () {
                     return pageWithBuilder();
                 }),
-            UI::buttonRemove(__('Remove'))
+            UI::buttonRemove(__(''))
+                ->icon('<i class="ti ti-trash fs-2"></i>')
                 ->confirm(__('Do you want to delete this record?'), 'Confirm')
                 ->wireClick(function ($item) {
                     return 'doRemove(' . $item->getDataItem()->id . ')';
