@@ -5,6 +5,7 @@ namespace Sokeio\Page\Livewire;
 use Sokeio\Page\Models\Page;
 use Sokeio\Components\Table;
 use Sokeio\Components\UI;
+use Sokeio\Facades\Locale;
 
 class PageTable extends Table
 {
@@ -27,29 +28,36 @@ class PageTable extends Table
     protected function getButtons()
     {
         return applyFilters('CMS_PAGE_BUTTONS', [
-            UI::button(__('Create With Builder'))->Link(function () {
-                if (!pageWithBuilder()) {
-                    return '#';
-                }
-                return route('admin.page.create-builder');
-            })->when(function () {
-                return pageWithBuilder();
-            }),
+            UI::button(__(''))
+                ->icon('<i class="ti ti-drag-drop fs-2 me-1"></i>')
+                ->title(__('Builder'))
+                ->Link(function () {
+                    if (!pageWithBuilder()) {
+                        return '#';
+                    }
+                    return route('admin.page.create-builder');
+                })->when(function () {
+                    return pageWithBuilder();
+                }),
             ...parent::getButtons(),
         ]);
     }
     protected function getTableActions()
     {
         return  applyFilters('CMS_PAGE_TABLE_ACTIONS', [
-            UI::button(__('Edit With Builder'))->Link(function ($item) {
-                if (!pageWithBuilder()) {
-                    return '#';
-                }
-                return route('admin.page.edit-builder', ['dataId' => $item->getDataItem()->id]);
-            })->when(function () {
-                return pageWithBuilder();
-            }),
-            ...parent::getTableActions()
+            UI::button(__(''))
+                ->icon('<i class="ti ti-drag-drop fs-2 me-1"></i>')
+                ->title(__('Builder'))
+                ->Link(function ($item) {
+                    return route('admin.page.edit-builder', ['dataId' => $item->getDataItem()->id]);
+                })->when(function () {
+                    return pageWithBuilder();
+                }),
+            UI::buttonRemove(__('Remove'))
+                ->confirm(__('Do you want to delete this record?'), 'Confirm')
+                ->wireClick(function ($item) {
+                    return 'doRemove(' . $item->getDataItem()->id . ')';
+                })
         ]);
     }
     public function getColumns()
@@ -61,6 +69,11 @@ class PageTable extends Table
             UI::text('status')->label(__('Status'))->NoSort(),
             UI::text('created_at')->label(__('Created At')),
             UI::text('updated_at')->label(__('Updated At')),
+            UI::text("")->label(__('Languages'))->noSave()->noSort()
+                ->fieldValue(function ($row) {
+                    sokeioFieldLocateRender($row, 'admin.page.edit', 'Edit Page');
+                }),
+
         ];
     }
 }

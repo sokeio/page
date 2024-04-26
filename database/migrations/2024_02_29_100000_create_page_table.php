@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 255);
-            $table->string('slug', 500);
             $table->string('description', 400)->nullable()->default('');
-            $table->longText('content');
+            $table->longText('content')->nullable();
+            $table->string('image', 255)->nullable();
             $table->integer('author_id');
             $table->string('status', 60)->default('published');
-            $table->string('image', 255)->nullable();
             $table->string('view_layout')->nullable();
             $table->datetime('published_at')->nullable();
             $table->string('lock_password')->nullable();

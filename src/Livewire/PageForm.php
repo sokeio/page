@@ -10,10 +10,7 @@ use Sokeio\Page\Models\Page;
 
 class PageForm extends Form
 {
-    public function mount()
-    {
-        $this->loadData();
-    }
+
     public function getTitle()
     {
         return __('Page');
@@ -46,7 +43,6 @@ class PageForm extends Form
                     UI::row([
                         UI::column8([
                             UI::text('name')->label(__('Title'))->required(),
-                            UI::text('slug')->label(__('Slug')),
                             UI::tinymce('content')->label(__('Content'))->required(),
                             UI::textarea('description')->label(__('Description')),
                             UI::textarea('custom_js')->label(__('Custom Js')),
@@ -102,7 +98,6 @@ class PageForm extends Form
                                     ],
                                 ];
                             }),
-                            UI::checkBox('is_container')->label(__('With Container')),
                             UI::button(__('Save article'))->wireClick('doSave()')->className('w-100 mb-2'),
                         ]),
                     ]),

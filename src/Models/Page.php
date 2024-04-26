@@ -10,11 +10,13 @@ use Sokeio\Comment\Concerns\Viewable;
 use Sokeio\Concerns\WithModelAssets;
 use Sokeio\Concerns\WithSlug;
 use Sokeio\Seo\HasSEO;
+use Sokeio\Translatable\Translatable;
 
 class Page extends Model
 {
     use WithSlug, HasSEO, Commentable, Actionable, Rateable, Viewable;
     use WithModelAssets;
+    use Translatable;
     public function isHomePage()
     {
         return $this->id == setting('PLATFORM_HOMEPAGE');
@@ -24,7 +26,7 @@ class Page extends Model
         if ($this->isHomePage()) {
             return url('/');
         }
-        return route('page.slug', ['page' => $this->slug]);
+        return route('page.slug', ['page' => $this->slug->key]);
     }
     /**
      * The attributes that are mass assignable.
@@ -33,7 +35,6 @@ class Page extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
         'description',
         'content',
         'image',
@@ -53,6 +54,12 @@ class Page extends Model
         'custom_css',
         'updated_at',
         'created_at'
+    ];
+    protected $translatedAttributes = [
+        'name',
+        'description',
+        'content',
+        'image'
     ];
 
     protected $casts = [

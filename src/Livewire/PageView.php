@@ -9,33 +9,29 @@ use Sokeio\Facades\Assets;
 
 class PageView extends Component
 {
-    public Page $page;
-    public function mount()
+    public Page $pageData;
+    public function mount($page)
     {
-        if ($this->page->id == setting('PLATFORM_HOMEPAGE') && request()->path() != '/') {
+        $this->pageData = Page::query()->withSlugKey($page)->firstOrFail();
+        if ($this->pageData->id == setting('PLATFORM_HOMEPAGE') && request()->path() != '/') {
             redirect(url('/'));
             return;
         }
-        if ($this->page->id == setting('PLATFORM_HOMEPAGE')) {
-            $this->page->setAssetLayout();
-            SeoHelper()->SEODataTransformer(function ($data) {
-                $data['title'] = setting('PLATFORM_HOMEPAGE_TITLE');
-                $data['description'] = setting('PLATFORM_HOMEPAGE_DESCRIPTION');
-                return $data;
-            });
+        if ($this->pageData->id == setting('PLATFORM_HOMEPAGE')) {
+            $this->pageData->setAssetLayout();
             Assets::setTitle(setting('PLATFORM_HOMEPAGE_TITLE'));
             Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
         } else {
             breadcrumb()->add(__('Home'), url(''));
-            $this->page->setAssets();
+            $this->pageData->setAssets();
         }
     }
     public function render()
     {
-        if ($this->page->view_layout && View::exists($this->page->view_layout)) {
-            return viewScope($this->page->view_layout, ['page' => $this->page]);
+        if ($this->pageData->view_layout && View::exists($this->pageData->view_layout)) {
+            return viewScope($this->pageData->view_layout, ['page' => $this->pageData]);
         }
 
-        return viewScope('page::page', ['page' => $this->page]);
+        return viewScope('page::page', ['page' => $this->pageData]);
     }
 }
