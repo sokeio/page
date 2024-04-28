@@ -1,12 +1,12 @@
 {
-    "id":"module-page-e1838ef1-0c9f-4381-bb75-f59c543843591037456",
-    "name": "Page",
-    "version":"v1.0.0",
-    "alias": "page",
-    "description": "",
-    "keywords": [],
-    "priority": 200,
-    "aliases": {},
-    "namespace":"Sokeio\\Page",
-    "requires": []
+  "id": "sokeio/page",
+  "name": "Page",
+  "version": "v1.0.0",
+  "alias": "page",
+  "description": "",
+  "keywords": [],
+  "priority": 200,
+  "aliases": {},
+  "namespace": "Sokeio\\Page",
+  "requires": []
 }
