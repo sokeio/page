@@ -34,7 +34,7 @@ class Page extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'title',
         'description',
         'content',
         'image',
@@ -56,7 +56,7 @@ class Page extends Model
         'created_at'
     ];
     protected $translatedAttributes = [
-        'name',
+        'title',
         'description',
         'content',
         'image'

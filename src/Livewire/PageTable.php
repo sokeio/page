@@ -64,7 +64,7 @@ class PageTable extends Table
     public function getColumns()
     {
         return [
-            UI::text('name')->label(__('Title'))->setLink(),
+            UI::text('title')->label(__('Title'))->setLink(),
             UI::text('layout')->label(__('Layout'))->NoSort(),
             UI::datePicker('published_at')->label(__('Published At'))->NoSort(),
             UI::text('status')->label(__('Status'))->NoSort(),

@@ -35,8 +35,7 @@ class PageBuilder extends FormBuilder
                     return auth()->user()->id;
                 }),
                 UI::Div(UI::error('content')),
-                UI::text('name')->label(__('Title'))->required(),
-                UI::text('slug')->label(__('Slug')),
+                UI::text('title')->label(__('Title'))->required(),
                 UI::textarea('description')->label(__('Description')),
 
                 UI::select('status')->label(__('Status'))->dataSource(function () {
@@ -86,10 +85,9 @@ class PageBuilder extends FormBuilder
                         ],
                     ];
                 }),
-                UI::checkBox('is_container')->label(__('With Container')),
                 UI::textarea('custom_js')->label(__('Custom Js')),
                 UI::textarea('custom_css')->label(__('Custom CSS')),
-                UI::button(__('Save article'))->wireClick('doSave()')->className('w-100 mb-2'),
+                UI::button(__('Save Page'))->wireClick('doSave()')->className('w-100 mb-2'),
             ])
         ]));
     }

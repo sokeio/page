@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('page_id');
             $table->string('locale')->index();
-            $table->string('name', 255);
+            $table->string('title', 255);
             $table->string('description', 400)->nullable()->default('');
             $table->longText('content')->nullable();
             $table->string('image', 255)->nullable();

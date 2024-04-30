@@ -42,7 +42,7 @@ class PageForm extends Form
                     UI::hidden('author_id')->valueDefault(auth()->user()->id),
                     UI::row([
                         UI::column8([
-                            UI::text('name')->label(__('Title'))->required(),
+                            UI::text('title')->label(__('Title'))->required(),
                             UI::tinymce('content')->label(__('Content'))->required(),
                             UI::textarea('description')->label(__('Description')),
                             UI::textarea('custom_js')->label(__('Custom Js')),
