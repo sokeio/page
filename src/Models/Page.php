@@ -34,7 +34,6 @@ class Page extends Model
      * @var string[]
      */
     protected $fillable = [
-        'title',
         'description',
         'content',
         'image',

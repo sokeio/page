@@ -90,7 +90,7 @@ class PageServiceProvider extends ServiceProvider
                                         'id' => '',
                                         'name' => 'None'
                                     ],
-                                    ...Page::query()->where('status', 'published')->get(['id', 'name'])
+                                    ...Page::query()->where('status', 'published')->get(['id', 'title'])
                                 ];
                             })
                         ]),
