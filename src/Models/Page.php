@@ -26,7 +26,7 @@ class Page extends Model
         if ($this->isHomePage()) {
             return url('/');
         }
-        return route('page.slug', ['page' => $this->slug->key]);
+        return route('page.slug', ['page' => $this->slug]);
     }
     /**
      * The attributes that are mass assignable.
