@@ -26,6 +26,7 @@ class PageBuilder extends FormBuilder
     {
         return $this->data->slug ? route('page.slug', ['page' => $this->data->slug]) : '';
     }
+
     protected function formUI()
     {
         return UI::prex('data', UI::row([
@@ -42,11 +43,11 @@ class PageBuilder extends FormBuilder
                     return [
                         [
                             'id' => 'draft',
-                            'name' => __('Draft')
+                            'title' => __('Draft')
                         ],
                         [
                             'id' => 'published',
-                            'name' => __('Published')
+                            'natitleme' => __('Published')
                         ]
                     ];
                 })->valueDefault('published'),
@@ -57,14 +58,14 @@ class PageBuilder extends FormBuilder
                     return [
                         [
                             'id' => 'default',
-                            'name' => __('Default')
+                            'title' => __('Default')
                         ],
                         ...collect(Theme::getLayouts())->duplicates()->where(function ($item) {
                             return $item != 'default';
                         })->map(function ($layout) {
                             return [
                                 'id' => $layout,
-                                'name' => $layout
+                                'title' => $layout
                             ];
                         })
                     ];
@@ -73,15 +74,15 @@ class PageBuilder extends FormBuilder
                     return [
                         [
                             'id' => 'page::page',
-                            'name' => __('Page Default')
+                            'title' => __('Page Default')
                         ],
                         [
                             'id' => 'page::page-title',
-                            'name' => __('Page With Title')
+                            'title' => __('Page With Title')
                         ],
                         [
                             'id' => 'page::page-no-title',
-                            'name' => __('Page Without Title')
+                            'title' => __('Page Without Title')
                         ],
                     ];
                 }),

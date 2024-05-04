@@ -53,11 +53,11 @@ class PageForm extends Form
                                 return [
                                     [
                                         'id' => 'draft',
-                                        'name' => __('Draft')
+                                        'title' => __('Draft')
                                     ],
                                     [
                                         'id' => 'published',
-                                        'name' => __('Published')
+                                        'title' => __('Published')
                                     ]
                                 ];
                             })->valueDefault('published'),
@@ -70,14 +70,14 @@ class PageForm extends Form
                                 return [
                                     [
                                         'id' => 'default',
-                                        'name' => __('Default')
+                                        'title' => __('Default')
                                     ],
                                     ...collect(Theme::getLayouts())->duplicates()->where(function ($item) {
                                         return $item != 'default';
                                     })->map(function ($layout) {
                                         return [
                                             'id' => $layout,
-                                            'name' => $layout
+                                            'title' => $layout
                                         ];
                                     })
                                 ];
