@@ -33,16 +33,16 @@ class MenuItemPage extends FormMenu
 
                     $rs = Page::query()
                         ->when($text != "", function ($query) use ($text) {
-                            $query->where('name', 'like', '%' . $text . '%');
+                            $query->where('title', 'like', '%' . $text . '%');
                         })
-                        ->limit(20)->get(['id', 'name']);
+                        ->limit(20)->get(['id', 'title']);
                     if ($currentId && $text == '') {
                         $currentPage = Page::find($currentId);
                         if ($currentPage) {
                             return [
                                 [
                                     'id' => $currentPage->id,
-                                    'name' => $currentPage->name
+                                    'title' => $currentPage->name
                                 ],
                                 ...$rs->toArray(),
                             ];
