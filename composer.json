@@ -1,10 +1,15 @@
 {
   "name": "sokeio/page",
-  "description": "",
+  "description": "a Laravel-based web application development package that provides support for developing feature pages.",
+  "license": "MIT",
+  "keywords": [],
+  "homepage": "https://github.com/sokeio/page",
   "authors": [
     {
       "name": "Nguyen Van Hau",
-      "email": "nguyenvanhaudev@gmail.com"
+      "email": "nguyenvanhau.soft@gmail.com",
+      "role": "Developer",
+      "homepage": "https://github.com/devhau"
     }
   ],
   "extra": {
