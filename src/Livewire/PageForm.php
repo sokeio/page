@@ -86,15 +86,15 @@ class PageForm extends Form
                                 return [
                                     [
                                         'id' => 'page::page',
-                                        'name' => __('Page Default')
+                                        'title' => __('Page Default')
                                     ],
                                     [
                                         'id' => 'page::page-title',
-                                        'name' => __('Page With Title')
+                                        'title' => __('Page With Title')
                                     ],
                                     [
                                         'id' => 'page::page-no-title',
-                                        'name' => __('Page Without Title')
+                                        'title' => __('Page Without Title')
                                     ],
                                 ];
                             }),

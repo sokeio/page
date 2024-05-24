@@ -88,7 +88,7 @@ class PageServiceProvider extends ServiceProvider
                                 return [
                                     [
                                         'id' => '',
-                                        'name' => 'None'
+                                        'title' => 'None'
                                     ],
                                     ...Page::query()->where('status', 'published')->get(['id', 'title'])
                                 ];
