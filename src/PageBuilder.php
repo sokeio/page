@@ -47,7 +47,7 @@ class PageBuilder extends FormBuilder
                         ],
                         [
                             'id' => 'published',
-                            'natitleme' => __('Published')
+                            'title' => __('Published')
                         ]
                     ];
                 })->valueDefault('published'),
