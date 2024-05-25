@@ -9,10 +9,16 @@ use Sokeio\Facades\Assets;
 
 class PageView extends Component
 {
-    public Page $pageData;
+    public ?Page $pageData;
     public function mount($page)
     {
-        $this->pageData = Page::query()->withSlugKey($page)->firstOrFail();
+        if (is_string($page)) {
+            $this->pageData = Page::query()->withSlugKey($page)->firstOrFail();
+        } elseif (is_numeric($page)) {
+            $this->pageData = Page::query()->where('id', $page)->firstOrFail();
+        } else {
+            $this->pageData = $page;
+        }
         if ($this->pageData->id == setting('PLATFORM_HOMEPAGE') && request()->path() != '/') {
             redirect(url('/'));
             return;
