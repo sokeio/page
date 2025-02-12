@@ -1,0 +1,12 @@
+{
+    "id":"sokeio-page",
+    "name": "Sokeio Page",
+    "version":"v1.0.0",
+    "alias": "page",
+    "description": "",
+    "keywords": [],
+    "priority": 200,
+    "aliases": {},
+    "namespace":"Sokeio\\Page",
+    "requires": []
+}

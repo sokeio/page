@@ -1,0 +1,27 @@
+{
+    "name": "sokeio/page",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nguyen Van Hau",
+            "email": "nguyenvanhaudev@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": ["Sokeio\\Page\\PageServiceProvider"],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+         "files": [
+            "helpers/constraint.php",
+            "helpers/function.php"
+        ],
+        "psr-4": {
+            "Sokeio\\Page\\": "src",
+            "Sokeio\\Page\\Database\\Factories\\": "database/factories",
+            "Sokeio\\Page\\Database\\Seeders\\": "database/seeders"
+        }
+    }
+}
