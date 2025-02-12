@@ -3,7 +3,7 @@
 namespace Sokeio\Page\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Sokeio\Content\Models\Menu;
+use Sokeio\Page\Models\Menu;
 use Sokeio\Menu\MenuItem;
 use Sokeio\Menu\MenuManager;
 use Sokeio\Theme;

@@ -3,6 +3,7 @@
 namespace Sokeio\Page;
 
 use Illuminate\Support\ServiceProvider;
+use Sokeio\Page\Providers\MenuServiceProvider;
 use Sokeio\ServicePackage;
 use Sokeio\Core\Concerns\WithServiceProvider;
 use Sokeio\Enums\AlertType;
@@ -36,6 +37,7 @@ class PageServiceProvider extends ServiceProvider
     }
     public function packageRegistered()
     {
+        $this->app->register(MenuServiceProvider::class);
         // packageRegistered
         // Menu Link
         SoUI::registerUI(
