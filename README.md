@@ -1,5 +1,8 @@
 # Sokeio Page Package
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/sokeio/page.svg?style=flat-square)](https://packagist.org/packages/sokeio/page)
+[![Total Downloads](https://img.shields.io/packagist/dt/sokeio/page.svg?style=flat-square)](https://packagist.org/packages/sokeio/page)
+
 The **Sokeio Page Package** is a Laravel extension designed to streamline the management of pages within your web application. This package offers a comprehensive set of features that allow you to create, edit, and manage pages efficiently, catering to the specific needs of your application.
 
 ## Key Features
