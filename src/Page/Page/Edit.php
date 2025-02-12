@@ -5,7 +5,6 @@ namespace Sokeio\Page\Page\Page;
 use Carbon\Carbon;
 use Sokeio\Page\Models\Page;
 use Sokeio\Core\Attribute\AdminPageInfo;
-use Sokeio\Components\Field\SelectField;
 use Sokeio\Page\Enums\PublishedType;
 use Sokeio\Theme;
 use Sokeio\UI\Common\Div;
@@ -16,7 +15,6 @@ use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\CodeEditor;
 use Sokeio\UI\Field\MediaFile;
 use Sokeio\UI\Field\Select;
-use Sokeio\UI\Field\SwitchField;
 use Sokeio\UI\Field\Textarea;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Tab\TabControl;
@@ -49,7 +47,7 @@ class Edit extends \Sokeio\Page
                             )
                     ])->col9(),
                     Div::make([
-                        Select::make()->dataSourceWithEnum(PublishedType::class)->label(__('Published'))->valueDefault(PublishedType::PUBLISHED->value),
+                        Select::make('published_type')->dataSourceWithEnum(PublishedType::class)->label(__('Published'))->valueDefault(PublishedType::PUBLISHED->value),
                         DatePicker::make('published_at')->label(__('Published At'))->enableTime()
                             ->valueDefault(Carbon::now()->format('Y-m-d H:i:s')),
                         MediaFile::make('image')->label(__('Image')),

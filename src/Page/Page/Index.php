@@ -32,7 +32,7 @@ class Index extends \Sokeio\Page
                         ->columnGroup('published', 'Published')
                         ->column(Column::make('title')->enableLink())
                         ->column(Column::make('description')->editUI(Textarea::make('description')->ruleRequired()))
-                        ->column(Column::make('published')->columnGroup('published')->editUI(SwitchField::make('published')))
+                        ->column(Column::make('published_type')->columnGroup('published')->editUI(SwitchField::make('published')))
                         ->column(Column::make('published_at')->columnGroup('published')->editUI(DatePicker::make('published_at')))
                         ->column('template')
                         ->query($this->getQuery())
