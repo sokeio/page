@@ -1,6 +1,8 @@
 {
     "name": "sokeio/page",
     "description": "",
+    "license": "MIT",
+    "homepage": "https://sokeio.com",
     "authors": [
         {
             "name": "Nguyen Van Hau",
