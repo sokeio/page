@@ -36,18 +36,8 @@ class PageView extends \Sokeio\Page
             return abort(404);
         }
         $viewPage = 'sokeio-page::pages.page.view';
-        if ($page->template) {
-            $info = Theme::getTemplate($page->template);
-            $layout = $info['layout'];
-            if ($layout) {
-                Theme::setLayout($layout);
-            }
-            if ($info['view']) {
-                $viewPage = $info['view'];
-            }
-        }
         return Theme::view($viewPage, [
             'page' => $page
-        ]);
+        ], [], false, $page->template);
     }
 }
