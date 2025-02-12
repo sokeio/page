@@ -52,7 +52,7 @@ class Edit extends \Sokeio\Page
                             ->valueDefault(Carbon::now()->format('Y-m-d H:i:s')),
                         MediaFile::make('image')->label(__('Image')),
                         Select::make('template')->label(__('Template'))->dataSource(Theme::getTemplateOptions())
-                            ->valueDefault('none')
+                            ->valueDefault('')
                             ->when(function (Select $field) {
                                 return $field->checkDataSource();
                             })

@@ -2,6 +2,7 @@
 
 namespace Sokeio\Page;
 
+use Illuminate\Support\Facades\Route;
 use Sokeio\Page\Models\Slug;
 
 trait WithSluggable
@@ -18,6 +19,9 @@ trait WithSluggable
     {
         if (!$this->sluggable) {
             $this->checkSlug();
+        }
+        if (!Route::has($this->getRouteName())) {
+            return $this->getRouteName();
         }
         return route($this->getRouteName(), [
             'slug' => $this->sluggable->slug
