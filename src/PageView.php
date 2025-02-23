@@ -23,7 +23,7 @@ class PageView extends \Sokeio\Page
         }
         $page = null;
         if (!$this->slug) {
-            $page = Page::find($homepageId);
+            $page = ($this->getPageConfig()->getModel())::find($homepageId);
             if ($page) {
                 $page->title = setting('SOKEIO_SITE_TITLE', $page->title);
                 $page->description = setting('SOKEIO_SITE_DESCRIPTION', $page->description);
