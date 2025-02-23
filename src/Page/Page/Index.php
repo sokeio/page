@@ -32,7 +32,7 @@ class Index extends \Sokeio\Page
                         ->columnGroup('published', 'Published')
                         ->column(Column::make('title')->enableLink())
                         ->column(Column::make('description')->editUI(Textarea::make('description')->ruleRequired()))
-                        ->column(Column::make('published_type')->columnGroup('published')->editUI(SwitchField::make('published')))
+                        ->column(Column::make('published_type')->columnGroup('published')->editUI(SwitchField::make('published_type')))
                         ->column(Column::make('published_at')->columnGroup('published')->editUI(DatePicker::make('published_at')))
                         ->column('template')
                         ->query($this->getQuery())
@@ -55,7 +55,8 @@ class Index extends \Sokeio\Page
                                 })->className('btn btn-danger ms-1 btn-sm')
                                 ->confirm(__('Are you sure?')),
 
-                        ])->rightUI([
+                        ], 'Actions', null, 'UI_PAGE_RIGHT_ACTION')
+                        ->rightUI([
                             Button::make()
                                 ->label(__('Add ' . $this->getPageConfig()->getTitle()))
                                 ->icon('ti ti-plus')
@@ -66,7 +67,7 @@ class Index extends \Sokeio\Page
                                     'ti ti-plus'
                                 )
 
-                        ])
+                        ], 'UI_PAGE_RIGHT_ACTION')
                 ]
             )
 

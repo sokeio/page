@@ -2,6 +2,7 @@
 
 namespace Sokeio\Page;
 
+use Sokeio\Page\Enums\PublishedType;
 use Sokeio\Page\Models\Slug;
 use Sokeio\Theme;
 
@@ -53,6 +54,12 @@ class SlugHelper
             Theme::description($item?->description);
         }
         if (!$item) {
+            return abort(404);
+        }
+        if ($item->published_type  === PublishedType::DRAFT) {
+            return abort(404);
+        }
+        if ($item->published_type === PublishedType::SCHEDULED && !$item->published_at->isFuture()) {
             return abort(404);
         }
         return Theme::view(
