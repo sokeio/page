@@ -2,13 +2,21 @@
 
 namespace Sokeio\Page\Models;
 
+use Illuminate\Routing\Route;
 use Sokeio\Model;
 use Sokeio\Page\Enums\PublishedType;
 use Sokeio\Page\WithSluggable;
 
 class Page extends Model
 {
-    use WithSluggable;
+    use WithSluggable {
+        getUrlAttribute as sluggableGetUrlAttribute;
+    }
+    public function getUrlAttribute()
+    {
+        if ($this->id == setting('SOKEIO_SITE_HOMEPAGE')) return route('site.page');
+        return $this->sluggableGetUrlAttribute();
+    }
     public function getRouteName()
     {
         return 'site.page';

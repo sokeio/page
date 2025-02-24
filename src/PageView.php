@@ -29,6 +29,12 @@ class PageView extends \Sokeio\Page
                 $page->description = setting('SOKEIO_SITE_DESCRIPTION', $page->description);
             }
         }
+        if ($this->slug &&  SlugHelper::findSluggableBySlug($this->slug, $this->getPageConfig()->getModel())?->id == $homepageId) {
+            $this->redirect(route('site.page'));
+            return <<<HTML
+        <div></div>
+        HTML;
+        };
         return SlugHelper::render($this->slug, $this->slugView, $this->getPageConfig()->getModel(), $page);
     }
 }
