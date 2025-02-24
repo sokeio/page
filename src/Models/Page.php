@@ -2,7 +2,6 @@
 
 namespace Sokeio\Page\Models;
 
-use Illuminate\Routing\Route;
 use Sokeio\Model;
 use Sokeio\Page\Enums\PublishedType;
 use Sokeio\Page\WithSluggable;
